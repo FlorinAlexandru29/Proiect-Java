@@ -30,7 +30,7 @@ public class DataLoader {
 
             // Display the loaded objects for debug
 
-            System.out.println("Customers:");
+        /*    System.out.println("Customers:");
             for (Customer customer : customers) {
                 System.out.println(customer);
             }
@@ -48,7 +48,7 @@ public class DataLoader {
             System.out.println("Tickets:");
             for (Ticket ticket : tickets) {
                 System.out.println(ticket);
-            }
+            } */
 
         } catch (SQLException e) {
             System.out.println("Error occurred while loading data: " + e.getMessage());

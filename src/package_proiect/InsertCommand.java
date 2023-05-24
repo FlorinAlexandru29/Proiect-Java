@@ -30,6 +30,7 @@ public class InsertCommand implements EventManager {
                     DataInsertion.insertCustomer(DatabaseManager.getInstance().getConnection(), name, email, phoneNumber);
 
                     System.out.println("Customer inserted successfully.");
+                    DataLoader.initializeData();
                     break;
 
                 case "venue":
@@ -45,6 +46,7 @@ public class InsertCommand implements EventManager {
                     DataInsertion.insertVenue(DatabaseManager.getInstance().getConnection(), venueName, address, capacity);
 
                     System.out.println("Venue inserted successfully.");
+                    DataLoader.initializeData();
                     break;
 
                 case "event":
@@ -63,6 +65,7 @@ public class InsertCommand implements EventManager {
                     DataInsertion.insertEvent(DatabaseManager.getInstance().getConnection(), eventName, eventDate, price, venueId);
 
                     System.out.println("Event inserted successfully.");
+                    DataLoader.initializeData();
                     break;
 
                 case "ticket":
@@ -85,6 +88,7 @@ public class InsertCommand implements EventManager {
                     DataInsertion.insertTicket(DatabaseManager.getInstance().getConnection(), ticketPrice, eventId, emaill, purchaseDate);
 
                     System.out.println("Ticket inserted successfully.");
+                    DataLoader.initializeData();
                     break;
 
                 default:

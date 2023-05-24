@@ -47,6 +47,12 @@ public class DatabaseInitializer {
                     ")";
             statement.executeUpdate(createTicketTableQuery);
 
+            String createExecutionTableQuery = "CREATE TABLE IF NOT EXISTS Execution (" +
+                    "date timestamp without time zone NOT NULL, " +
+                    "eveniment VARCHAR(50) NOT NULL " +
+                    ")";
+            statement.executeUpdate(createExecutionTableQuery);
+
             System.out.println("Tables created successfully.");
 
         } catch (SQLException e) {

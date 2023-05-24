@@ -22,6 +22,7 @@ public class LoginCommand implements EventManager {
             String email = reader.readLine();
             if (isEmailValid(email)) {
                 System.out.println("Login successful!");
+                LoggedUser.getInstance().setUserEmail(email);
             } else {
                 System.out.println("Invalid email. Login failed.");
             }
@@ -33,7 +34,7 @@ public class LoginCommand implements EventManager {
     private boolean isEmailValid(String email) {
         if (customers != null) {
             for (Customer customer : customers) {
-                System.out.println("Comparing input email: '" + email + "' with customer email: '" + customer.getEmail() + "'");
+               // System.out.println("Comparing input email: '" + email + "' with customer email: '" + customer.getEmail() + "'");
                 if (customer.getEmail().equals(email)) {
                     return true;
                 }

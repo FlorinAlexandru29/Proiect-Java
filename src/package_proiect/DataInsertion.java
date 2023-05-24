@@ -1,8 +1,8 @@
 package package_proiect;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class DataInsertion {
 
@@ -44,6 +44,20 @@ public class DataInsertion {
             statement.setInt(2, eventId);
             statement.setString(3, email);
             statement.setDate(4, purchaseDate);
+            statement.executeUpdate();
+        }
+    }
+
+
+    public static void insertexecution (Connection connection, String eveniment) throws SQLException{
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+        // Convert the timestamp to a PostgreSQL-compatible string
+        String timestampString = timestamp.toString();
+        String sql = "INSERT INTO execution (date, eveniment) VALUES (?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setTimestamp(1, timestamp);
+            statement.setString(2, eveniment);
             statement.executeUpdate();
         }
     }

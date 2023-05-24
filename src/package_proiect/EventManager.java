@@ -75,7 +75,7 @@ class CreateAccountCommand implements EventManager{
             DataInsertion.insertCustomer(DatabaseManager.getInstance().getConnection(), name, email, phoneNumber);
 
             System.out.println("Customer account created successfully.");
-
+            DataInsertion.insertexecution(DatabaseManager.getInstance().getConnection(),"createaccount");
             // Reload the customers from the database
             DataLoader.initializeData();
         } catch (IOException | SQLException e) {
@@ -120,14 +120,12 @@ class BuyTicket extends ShowEventsCommand implements EventManager{
     public BuyTicket (BufferedReader reader) {
         this.reader = reader;
     }
-    public BuyTicket() {
-        super();
-    }
     public void setEvents(List<Event> events) {
         this.events = events;
     }
     @Override
     public void execute() {
+        if (LoggedUser.getInstance().getUserEmail()!=null){
         java.util.Date currentDate = new java.util.Date();
         for (Event event : events) {
 
@@ -149,7 +147,10 @@ class BuyTicket extends ShowEventsCommand implements EventManager{
 
 
                             DataInsertion.insertTicket(DatabaseManager.getInstance().getConnection(), event.getTicketPrice(),event.getEventId(),LoggedUser.getInstance().getUserEmail(), sqlDate);
-                            System.out.println("Cumparat");}
+                            System.out.println("Cumparat");
+                            DataInsertion.insertexecution(DatabaseManager.getInstance().getConnection(),"buyticket");
+                            DataLoader.initializeData();
+                        }
                         catch (ParseException e) {
                             throw new RuntimeException(e);
                         }
@@ -164,4 +165,6 @@ class BuyTicket extends ShowEventsCommand implements EventManager{
             throw new RuntimeException(e);
         }
     }
-}
+        else System.out.println("You are not logged. Please connect using the login command");
+
+}}
