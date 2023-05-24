@@ -1,6 +1,6 @@
-package proiect_java;
+package package_proiect;
 
-public class UserManager {
+/* public class UserManager {
     private static UserManager instance;
     private User loggedUser;
 
@@ -23,3 +23,6 @@ public class UserManager {
         loggedUser = user;
     }
 }
+
+
+ */

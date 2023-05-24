@@ -1,4 +1,4 @@
-package proiect_java;
+package package_proiect;
 
 public class Venue {
     private int venueId;

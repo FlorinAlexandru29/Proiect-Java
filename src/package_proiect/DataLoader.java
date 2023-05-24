@@ -1,4 +1,4 @@
-package proiect_java;
+package package_proiect;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 public class DataLoader {
+    private static List<Customer> customers; // Store the loaded customers
+    private static List<Event> events; // Store the loaded events
 
     public static void initializeData() {
         Connection connection = null;
@@ -20,10 +22,11 @@ public class DataLoader {
             }
 
             // Load objects from the database
-            List<Customer> customers = loadCustomers(connection);
+            customers = loadCustomers(connection);
+
             List<Venue> venues = loadVenues(connection);
-            List<Event> events = loadEvents(connection);
-            List<Ticket> tickets = loadTickets(connection, events);
+            events = loadEvents(connection, venues);
+            List<Ticket> tickets = loadTickets(connection, events, customers);
 
             // Display the loaded objects or use them as required
 
@@ -73,19 +76,26 @@ public class DataLoader {
     }
 
     private static List<Customer> loadCustomers(Connection connection) throws SQLException {
-        List<Customer> customers = new ArrayList<>();
+        List<Customer> loadedCustomers = new ArrayList<>();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM customer");
         while (resultSet.next()) {
-            int cnp = resultSet.getInt("CNP");
             String name = resultSet.getString("name");
             String email = resultSet.getString("email");
             int phoneNumber = resultSet.getInt("phoneNumber");
-            Customer customer = new Customer(cnp, name, email, phoneNumber);
-            customers.add(customer);
+            Customer customer = new Customer(name, email, phoneNumber);
+            loadedCustomers.add(customer);
         }
         resultSet.close();
         statement.close();
+
+        // Assign the loaded customers to the class-level variable
+        customers = loadedCustomers;
+
+        return customers;
+    }
+
+    public static List<Customer> getCustomers() {
         return customers;
     }
 
@@ -106,8 +116,8 @@ public class DataLoader {
         return venues;
     }
 
-    private static List<Event> loadEvents(Connection connection) throws SQLException {
-        List<Event> events = new ArrayList<>();
+    private static List<Event> loadEvents(Connection connection, List<Venue> venues) throws SQLException {
+        List<Event> loadedEvents = new ArrayList<>();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM event");
         while (resultSet.next()) {
@@ -117,66 +127,69 @@ public class DataLoader {
             double price = resultSet.getDouble("price");
             int venueId = resultSet.getInt("venueId");
 
-            // Fetch the venue for the event
-            Venue venue = fetchVenue(connection, venueId);
+            // Find the corresponding venue object
+            Venue venue = null;
+            for (Venue v : venues) {
+                if (v.getVenueId() == venueId) {
+                    venue = v;
+                    break;
+                }
+            }
 
-            Event event = new Event(eventId, name, eventDate, price, venue);
-            events.add(event);
+            if (venue != null) {
+                Event event = new Event(eventId, name, eventDate, price, venue);
+                loadedEvents.add(event);
+            }
         }
         resultSet.close();
         statement.close();
+
+        // Assign the loaded events to the class-level variable
+        events = loadedEvents;
+
         return events;
     }
 
-    private static Venue fetchVenue(Connection connection, int venueId) throws SQLException {
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM venue WHERE venueId = " + venueId);
-        if (resultSet.next()) {
-            String name = resultSet.getString("name");
-            String address = resultSet.getString("address");
-            int capacity = resultSet.getInt("capacity");
-            return new Venue(venueId, name, address, capacity);
-        }
-        resultSet.close();
-        statement.close();
-        return null;
+    public static List<Event> getEvents() {
+        return events;
     }
 
-    private static List<Ticket> loadTickets(Connection connection, List<Event> events) throws SQLException {
+    private static List<Ticket> loadTickets(Connection connection, List<Event> events, List<Customer> customers) throws SQLException {
         List<Ticket> tickets = new ArrayList<>();
-        String sql = "SELECT * FROM ticket";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM ticket");
+        while (resultSet.next()) {
+            int ticketId = resultSet.getInt("ticketId");
+            double price = resultSet.getDouble("price");
+            int seatNumber = resultSet.getInt("seatNumber");
+            int eventId = resultSet.getInt("eventId");
+            String email = resultSet.getString("email");
+            Date purchaseDate = resultSet.getDate("purchaseDate");
 
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
+            // Find the corresponding event and customer objects
+            Event event = null;
+            for (Event e : events) {
+                if (e.getEventId() == eventId) {
+                    event = e;
+                    break;
+                }
+            }
 
-            while (resultSet.next()) {
-                int ticketId = resultSet.getInt("ticketId");
-                int seatNumber = resultSet.getInt("seatNumber");
-                int eventId = resultSet.getInt("eventId");
-                int customerID = resultSet.getInt("customerID");
-                java.sql.Date purchaseDate = resultSet.getDate("purchaseDate");
+            Customer customer = null;
+            for (Customer c : customers) {
+                if (c.getEmail().equals(email)) {
+                    customer = c;
+                    break;
+                }
+            }
 
-                // Find the corresponding event for the ticket
-                Event event = findEvent(events, eventId);
-
-                // Get the ticket price from the associated event
-                double price = event.getTicketPrice();
-
-                // Create the Ticket object and add it to the list
-                Ticket ticket = new Ticket(ticketId, seatNumber, event, customerID, purchaseDate);
+            if (event != null && customer != null) {
+                Ticket ticket = new Ticket(ticketId, price, seatNumber, event, customer, (java.sql.Date) purchaseDate);
                 tickets.add(ticket);
             }
         }
-
+        resultSet.close();
+        statement.close();
         return tickets;
-    }
-
-    private static Event findEvent(List<Event> events, int eventId) {
-        for (Event event : events) {
-            if (event.getEventId() == eventId) {
-                return event;
-            }
-        }
-        return null;
     }
 }

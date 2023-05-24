@@ -1,4 +1,4 @@
-package proiect_java;
+package package_proiect;
 import java.util.Date;
 
 
@@ -19,7 +19,7 @@ public class Event {
     }
     @Override
     public String toString() {
-        return "Event [EventId=" + eventId + ", Name=" + name + ", EventDate=" + date + ", Price=" + ticketPrice + ", Venue=" + venue + "]";
+        return "Name=" + name + ", EventDate=" + date + ", Price=" + ticketPrice + ", Venue=" + venue.getName();
     }
 
     // Getters and setters

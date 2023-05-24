@@ -1,4 +1,5 @@
-package proiect_java;
+package package_proiect;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,9 +12,8 @@ public class DatabaseInitializer {
 
             // Create Customer table
             String createCustomerTableQuery = "CREATE TABLE IF NOT EXISTS Customer (" +
-                    "CNP INT PRIMARY KEY, " +
                     "name VARCHAR(50) NOT NULL, " +
-                    "email VARCHAR(50) NOT NULL, " +
+                    "email VARCHAR(50) PRIMARY KEY, " +
                     "phoneNumber INT NOT NULL" +
                     ")";
             statement.executeUpdate(createCustomerTableQuery);
@@ -43,7 +43,7 @@ public class DatabaseInitializer {
                     "price DOUBLE PRECISION NOT NULL, " +
                     "seatNumber INT NOT NULL, " +
                     "eventId INT REFERENCES Event(eventId), " +
-                    "customerId INT REFERENCES Customer(CNP), " +
+                    "email VARCHAR(50) REFERENCES Customer(email), " +
                     "purchaseDate DATE NOT NULL" +
                     ")";
             statement.executeUpdate(createTicketTableQuery);

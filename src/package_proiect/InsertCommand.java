@@ -1,4 +1,4 @@
-package proiect_java;
+package package_proiect;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,8 +19,6 @@ public class InsertCommand implements EventManager {
             switch (tableName) {
                 case "customer":
                     // Gather customer data
-                    System.out.print("Enter customer CNP: ");
-                    int CNP = Integer.parseInt(reader.readLine());
                     System.out.print("Enter customer name: ");
                     String name = reader.readLine();
                     System.out.print("Enter customer email: ");
@@ -29,7 +27,7 @@ public class InsertCommand implements EventManager {
                     int phoneNumber = Integer.parseInt(reader.readLine());
 
                     // Insert customer into the database
-                    DataInsertion.insertCustomer(DatabaseManager.getInstance().getConnection(), CNP, name, email, phoneNumber);
+                    DataInsertion.insertCustomer(DatabaseManager.getInstance().getConnection(), name, email, phoneNumber);
 
                     System.out.println("Customer inserted successfully.");
                     break;
@@ -67,7 +65,7 @@ public class InsertCommand implements EventManager {
                     System.out.println("Event inserted successfully.");
                     break;
 
-                case "ticket":
+             /*   case "ticket":
                     // Gather ticket data
                     System.out.print("Enter ticket ID: ");
                     int ticketId = Integer.parseInt(reader.readLine());
@@ -77,18 +75,17 @@ public class InsertCommand implements EventManager {
                     int seatNumber = Integer.parseInt(reader.readLine());
                     System.out.print("Enter event ID: ");
                     int eventId = Integer.parseInt(reader.readLine());
-                    System.out.print("Enter customer ID: ");
-                    int customerId = Integer.parseInt(reader.readLine());
+                    System.out.print("Enter customer email: ");
+                    String email = reader.readLine();
                     System.out.print("Enter purchase date (YYYY-MM-DD): ");
                     String purchaseDateStr = reader.readLine();
                     java.sql.Date purchaseDate = java.sql.Date.valueOf(purchaseDateStr);
 
                     // Insert ticket into the database
-                    DataInsertion.insertTicket(DatabaseManager.getInstance().getConnection(), ticketPrice, seatNumber, eventId, customerId, purchaseDate);
+                    DataInsertion.insertTicket(DatabaseManager.getInstance().getConnection(), ticketPrice, seatNumber, eventId, email, purchaseDate);
 
                     System.out.println("Ticket inserted successfully.");
-                    break;
-
+                    break; */
 
                 default:
                     System.out.println("Invalid table name.");

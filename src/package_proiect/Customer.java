@@ -1,30 +1,22 @@
-package proiect_java;
+package package_proiect;
 
 public class Customer {
-    private int CNP;
     private String name;
     private String email;
     private int phoneNumber;
 
-    public Customer(int CNP, String name, String email, int phoneNumber) {
-        this.CNP = CNP;
+    public Customer(String name, String email, int phoneNumber) {
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
+
     @Override
     public String toString() {
-        return "Customer [CNP=" + CNP + ", Name=" + name + ", Email=" + email + ", PhoneNumber=" + phoneNumber + "]";
+        return "Customer [Name=" + name + ", Email=" + email + ", PhoneNumber=" + phoneNumber + "]";
     }
 
     // Getters and setters
-    public int getCNP() {
-        return CNP;
-    }
-
-    public void setCNP(int CNP) {
-        this.CNP = CNP;
-    }
 
     public String getName() {
         return name;

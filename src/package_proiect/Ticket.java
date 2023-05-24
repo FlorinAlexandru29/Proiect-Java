@@ -1,28 +1,30 @@
-package proiect_java;
+package package_proiect;
 
 import java.sql.Date;
 
 public class Ticket {
     private int ticketId;
+    private double ticketPrice;
     private int seatNumber;
     private Event event;
-    private int customerID;
+    private Customer customer;
     private Date purchaseDate;
 
-    public Ticket(int ticketId, int seatNumber, Event event, int customerID, Date purchaseDate) {
+    public Ticket(int ticketId, double ticketPrice, int seatNumber, Event event, Customer customer, Date purchaseDate) {
         this.ticketId = ticketId;
+        this.ticketPrice = ticketPrice;
         this.seatNumber = seatNumber;
         this.event = event;
-        this.customerID = customerID;
+        this.customer = customer;
         this.purchaseDate = purchaseDate;
     }
-
     @Override
     public String toString() {
-        return "Ticket [TicketId=" + ticketId + ", SeatNumber=" + seatNumber + ", Event=" + event + ", CustomerID=" + customerID + ", PurchaseDate=" + purchaseDate + "]";
+        return "Ticket [TicketId=" + ticketId + ", SeatNumber=" + seatNumber + ", Event=" + event + ", Customer=" + customer + ", PurchaseDate=" + purchaseDate + "]";
     }
 
     // Getters and setters
+
     public int getTicketId() {
         return ticketId;
     }
@@ -47,12 +49,12 @@ public class Ticket {
         this.event = event;
     }
 
-    public int getCustomerID() {
-        return customerID;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Date getPurchaseDate() {
