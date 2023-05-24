@@ -37,14 +37,13 @@ public class DataInsertion {
         }
     }
 
-    public static void insertTicket(Connection connection, double price, int seatNumber, int eventId, String email, java.sql.Date purchaseDate) throws SQLException {
-        String sql = "INSERT INTO ticket (price, seatnumber, eventid, email, purchasedate) VALUES (?, ?, ?, ?, ?)";
+    public static void insertTicket(Connection connection, double price, int eventId, String email, java.sql.Date purchaseDate) throws SQLException {
+        String sql = "INSERT INTO ticket (price, eventid, email, purchasedate) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setDouble(1, price);
-            statement.setInt(2, seatNumber);
-            statement.setInt(3, eventId);
-            statement.setString(4, email);
-            statement.setDate(5, purchaseDate);
+            statement.setInt(2, eventId);
+            statement.setString(3, email);
+            statement.setDate(4, purchaseDate);
             statement.executeUpdate();
         }
     }

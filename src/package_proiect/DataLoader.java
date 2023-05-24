@@ -12,12 +12,12 @@ public class DataLoader {
     public static void initializeData() {
         Connection connection = null;
         try {
-            // Get a database connection
+
             connection = DatabaseManager.getInstance().getConnection();
 
-            // Check if tables exist
+
             if (!tablesExist(connection)) {
-                // Tables don't exist, initialize them
+                // Initialising Tables
                 DatabaseInitializer.createTables(connection);
             }
 
@@ -28,7 +28,7 @@ public class DataLoader {
             events = loadEvents(connection, venues);
             List<Ticket> tickets = loadTickets(connection, events, customers);
 
-            // Display the loaded objects or use them as required
+            // Display the loaded objects for debug
 
             System.out.println("Customers:");
             for (Customer customer : customers) {
@@ -89,7 +89,7 @@ public class DataLoader {
         resultSet.close();
         statement.close();
 
-        // Assign the loaded customers to the class-level variable
+        // Assign the loaded customers to parse the customers
         customers = loadedCustomers;
 
         return customers;
@@ -127,7 +127,7 @@ public class DataLoader {
             double price = resultSet.getDouble("price");
             int venueId = resultSet.getInt("venueId");
 
-            // Find the corresponding venue object
+            // Finding venu object
             Venue venue = null;
             for (Venue v : venues) {
                 if (v.getVenueId() == venueId) {
@@ -144,7 +144,7 @@ public class DataLoader {
         resultSet.close();
         statement.close();
 
-        // Assign the loaded events to the class-level variable
+        // Assign the loaded events for parsing
         events = loadedEvents;
 
         return events;
@@ -161,7 +161,6 @@ public class DataLoader {
         while (resultSet.next()) {
             int ticketId = resultSet.getInt("ticketId");
             double price = resultSet.getDouble("price");
-            int seatNumber = resultSet.getInt("seatNumber");
             int eventId = resultSet.getInt("eventId");
             String email = resultSet.getString("email");
             Date purchaseDate = resultSet.getDate("purchaseDate");
@@ -184,7 +183,7 @@ public class DataLoader {
             }
 
             if (event != null && customer != null) {
-                Ticket ticket = new Ticket(ticketId, price, seatNumber, event, customer, (java.sql.Date) purchaseDate);
+                Ticket ticket = new Ticket(ticketId, price, event, customer, (java.sql.Date) purchaseDate);
                 tickets.add(ticket);
             }
         }

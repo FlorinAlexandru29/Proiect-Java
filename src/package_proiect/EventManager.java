@@ -2,13 +2,12 @@ package package_proiect;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public interface EventManager {
 
@@ -72,7 +71,7 @@ class CreateAccountCommand implements EventManager{
             System.out.print("Enter customer phone number: ");
             int phoneNumber = Integer.parseInt(reader.readLine());
 
-            // Insert customer into the database
+            // Insert customer
             DataInsertion.insertCustomer(DatabaseManager.getInstance().getConnection(), name, email, phoneNumber);
 
             System.out.println("Customer account created successfully.");
@@ -106,7 +105,7 @@ class ShowEventsCommand implements EventManager {
             System.out.println("No events available.");
         } else {
             System.out.println("Events:");
-            Date currentDate = new Date();
+            java.util.Date currentDate = new java.util.Date();
             for (Event event : events) {
                 if (event.getDate().compareTo(currentDate) > 0) {
                     System.out.println(event);
@@ -129,7 +128,7 @@ class BuyTicket extends ShowEventsCommand implements EventManager{
     }
     @Override
     public void execute() {
-        Date currentDate = new Date();
+        java.util.Date currentDate = new java.util.Date();
         for (Event event : events) {
 
             if (event.getDate().compareTo(currentDate) > 0) {
@@ -139,10 +138,26 @@ class BuyTicket extends ShowEventsCommand implements EventManager{
         System.out.println("Select An Event");
         try {
             String selectedeventname = reader.readLine().toLowerCase();
+            System.out.println(selectedeventname);
             for (Event event : events) {
+                if (event.getName().toLowerCase().equals(selectedeventname)) {
+                    try{
+                        String dateString = "2023-04-23";
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        try{ java.util.Date utilDate = dateFormat.parse(dateString);
+                            Date sqlDate = new Date(utilDate.getTime());
 
-                if (event.getName()==selectedeventname) {
-                    System.out.println("Cumparat");
+
+                            DataInsertion.insertTicket(DatabaseManager.getInstance().getConnection(), event.getTicketPrice(),event.getEventId(),LoggedUser.getInstance().getUserEmail(), sqlDate);
+                            System.out.println("Cumparat");}
+                        catch (ParseException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                    }
+                    catch (SQLException e) {
+                        System.out.println("Error occurred during account creation: " + e.getMessage());
+                    }
                 }
             }
         } catch (IOException e) {

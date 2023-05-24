@@ -10,17 +10,16 @@ public class Ticket {
     private Customer customer;
     private Date purchaseDate;
 
-    public Ticket(int ticketId, double ticketPrice, int seatNumber, Event event, Customer customer, Date purchaseDate) {
+    public Ticket(int ticketId, double ticketPrice, Event event, Customer customer, Date purchaseDate) {
         this.ticketId = ticketId;
         this.ticketPrice = ticketPrice;
-        this.seatNumber = seatNumber;
         this.event = event;
         this.customer = customer;
         this.purchaseDate = purchaseDate;
     }
     @Override
     public String toString() {
-        return "Ticket [TicketId=" + ticketId + ", SeatNumber=" + seatNumber + ", Event=" + event + ", Customer=" + customer + ", PurchaseDate=" + purchaseDate + "]";
+        return "Ticket [TicketId=" + ticketId + ", Event=" + event + ", Customer=" + customer + ", PurchaseDate=" + purchaseDate + "]";
     }
 
     // Getters and setters

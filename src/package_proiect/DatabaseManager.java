@@ -13,7 +13,6 @@ public class DatabaseManager {
     private String password = "1234";
 
     private DatabaseManager() {
-        // Private constructor to prevent direct instantiation
     }
 
     public static DatabaseManager getInstance() {

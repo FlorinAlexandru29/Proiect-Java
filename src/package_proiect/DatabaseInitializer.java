@@ -41,7 +41,6 @@ public class DatabaseInitializer {
             String createTicketTableQuery = "CREATE TABLE IF NOT EXISTS Ticket (" +
                     "ticketId SERIAL PRIMARY KEY, " +
                     "price DOUBLE PRECISION NOT NULL, " +
-                    "seatNumber INT NOT NULL, " +
                     "eventId INT REFERENCES Event(eventId), " +
                     "email VARCHAR(50) REFERENCES Customer(email), " +
                     "purchaseDate DATE NOT NULL" +

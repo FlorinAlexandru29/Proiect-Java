@@ -65,7 +65,7 @@ public class InsertCommand implements EventManager {
                     System.out.println("Event inserted successfully.");
                     break;
 
-             /*   case "ticket":
+                case "ticket":
                     // Gather ticket data
                     System.out.print("Enter ticket ID: ");
                     int ticketId = Integer.parseInt(reader.readLine());
@@ -76,16 +76,16 @@ public class InsertCommand implements EventManager {
                     System.out.print("Enter event ID: ");
                     int eventId = Integer.parseInt(reader.readLine());
                     System.out.print("Enter customer email: ");
-                    String email = reader.readLine();
+                    String emaill = reader.readLine();
                     System.out.print("Enter purchase date (YYYY-MM-DD): ");
                     String purchaseDateStr = reader.readLine();
                     java.sql.Date purchaseDate = java.sql.Date.valueOf(purchaseDateStr);
 
                     // Insert ticket into the database
-                    DataInsertion.insertTicket(DatabaseManager.getInstance().getConnection(), ticketPrice, seatNumber, eventId, email, purchaseDate);
+                    DataInsertion.insertTicket(DatabaseManager.getInstance().getConnection(), ticketPrice, eventId, emaill, purchaseDate);
 
                     System.out.println("Ticket inserted successfully.");
-                    break; */
+                    break;
 
                 default:
                     System.out.println("Invalid table name.");

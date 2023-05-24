@@ -22,7 +22,7 @@ public class Menu {
         loggedIn = false;
         isAdmin = false;
         customers = new ArrayList<>(); // Initialize customers list
-        events=new ArrayList<>();
+        events=new ArrayList<>();// Initialize events list
         setupCommands();
     }
 
@@ -36,7 +36,7 @@ public class Menu {
 
         commands.put("showevents", new ShowEventsCommand(events));
         commands.put("insert", new InsertCommand(reader));
-        commands.put("buyticket", new BuyTicket());
+        commands.put("buyticket", new BuyTicket(reader));
        /* commands.put("mytickets", new MyTicketsCommand());
 
 
@@ -61,7 +61,6 @@ public class Menu {
             LoginCommand loginCommand = (LoginCommand) command;
             loginCommand.setCustomers(customers); // Pass customers to LoginCommand
             loggedIn = true;
-            isAdmin = false;
         } /* else if (command instanceof AdminCommand) {
             if (loggedIn && isAdmin) {
                 isAdmin = true;
@@ -97,7 +96,6 @@ public class Menu {
 
                 if (loggedIn && command.equals("logout")) {
                     loggedIn = false;
-                    isAdmin = false;
                 }
             }
         } catch (IOException e) {
