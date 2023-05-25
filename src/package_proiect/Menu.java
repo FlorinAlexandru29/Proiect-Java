@@ -20,7 +20,7 @@ public class Menu {
         reader = new BufferedReader(new InputStreamReader(System.in));
         commands = new HashMap<>();
         loggedIn = false;
-        isAdmin = false;
+       // isAdmin = false;
         customers = new ArrayList<>(); // Initialize customers list
         events=new ArrayList<>();
         setupCommands();
@@ -61,7 +61,7 @@ public class Menu {
             LoginCommand loginCommand = (LoginCommand) command;
             loginCommand.setCustomers(customers); // Pass customers to LoginCommand
             loggedIn = true;
-            isAdmin = false;
+          //  isAdmin = false;
         } /* else if (command instanceof AdminCommand) {
             if (loggedIn && isAdmin) {
                 isAdmin = true;
@@ -97,7 +97,7 @@ public class Menu {
 
                 if (loggedIn && command.equals("logout")) {
                     loggedIn = false;
-                    isAdmin = false;
+                   // isAdmin = false;
                 }
             }
         } catch (IOException e) {
